@@ -19,7 +19,6 @@ import { HomePageComponent } from './home-page/home-page.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

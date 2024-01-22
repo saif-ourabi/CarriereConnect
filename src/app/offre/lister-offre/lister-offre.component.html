@@ -18,7 +18,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let f of offres | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+        <tr *ngFor="let f of offres">
           <td>{{f.id_offre}}</td>
           <td>{{f.experience}}</td>
           <td>{{f.salaire}}</td>
@@ -29,7 +29,6 @@
         </tr>
       </tbody>
     </table>
-    <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
   </div>
   
 </body>
