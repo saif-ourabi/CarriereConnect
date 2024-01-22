@@ -1,1 +1,36 @@
-<p>lister-offre works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <div class="container mt-3">      
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>experience</th>
+          <th>salaire</th>
+          <th>date_exp</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let f of offres | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+          <td>{{f.id_offre}}</td>
+          <td>{{f.experience}}</td>
+          <td>{{f.salaire}}</td>
+          <td>{{f.date_exp}}</td>
+          <td>
+            <a [routerLink]="['/Details',f.id]">Details</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+  </div>
+  
+</body>
+</html>
