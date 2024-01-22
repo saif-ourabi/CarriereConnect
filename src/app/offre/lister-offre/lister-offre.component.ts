@@ -9,8 +9,7 @@ import { Subject } from 'rxjs';
 })
 export class ListerOffreComponent implements OnInit {
   offres: any[];
-  currentPage = 1;
-  itemsPerPage = 10;
+  p: number = 1;
 
   constructor(private offreserviceService: OffreserviceService) { }
 

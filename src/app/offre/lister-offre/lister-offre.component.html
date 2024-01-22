@@ -18,18 +18,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let f of offres">
+        <tr *ngFor="let f of offres | paginate: { itemsPerPage: 10, currentPage: p }">
           <td>{{f.id_offre}}</td>
           <td>{{f.experience}}</td>
-          <td>{{f.salaire}}</td>
+          <td>{{f.saliare}}</td>
           <td>{{f.date_exp}}</td>
           <td>
-            <a [routerLink]="['/Details',f.id]">Details</a>
+            <a [routerLink]="['/Details',f.id_offre]">Details</a>
           </td>
         </tr>
       </tbody>
     </table>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </div>
-  
 </body>
 </html>
