@@ -8,6 +8,9 @@ import { ListerOffreComponent } from './offre/lister-offre/lister-offre.componen
 import { HomePageComponent } from './home-page/home-page.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { DetailsComponent } from './offre/details/details.component';
+import { LoginComponent } from './user/login/login.component';
+import { RegisterComponent } from './user/register/register.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -16,13 +19,17 @@ import { DetailsComponent } from './offre/details/details.component';
     HeaderComponent,
     ListerOffreComponent,
     HomePageComponent,
-    DetailsComponent
+    DetailsComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     NgxPaginationModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
