@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ListerOffreComponent } from './offre/lister-offre/lister-offre.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { DetailsComponent } from './offre/details/details.component';
 
 
 @NgModule({
@@ -13,12 +15,14 @@ import { HomePageComponent } from './home-page/home-page.component';
     AppComponent,
     HeaderComponent,
     ListerOffreComponent,
-    HomePageComponent
+    HomePageComponent,
+    DetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    NgxPaginationModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

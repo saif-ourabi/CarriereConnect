@@ -6,11 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class OffreserviceService {
-  private url = "http://localhost:8000/listerOffre.php";
+  private url = "http://localhost:8000/";
 
   constructor(private http: HttpClient) { }
 
   getOffres(): Observable<any[]> {
-    return this.http.get<any[]>(this.url);
+    return this.http.get<any[]>(this.url+"listerOffre.php");
   }
 }
