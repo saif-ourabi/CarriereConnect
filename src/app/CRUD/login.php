@@ -33,8 +33,12 @@ class login
             header("Access-Control-Allow-Origin: *");
             header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
             header("Access-Control-Allow-Headers: Content-Type, Authorization");
-            if (!empty($res)&& md5($user_data["password"])==$res[0]["password"]) {    
-                $response = array('status' => true, 'message' => 'corect info');
+            
+            if (!empty($res)&& md5($user_data["password"])==$res[0]["password"]) {
+                session_start();
+                $_SESSION["userId"]=$res[0]['id_user'];    
+                $_SESSION["sessionId"]=session_id();
+                $response = array('status' => true, 'message' => 'corect info','sessionId'=>$_SESSION['sessionId'],'userId'=>$_SESSION['userId']);
                 echo json_encode($response);
             } else {
                 header("Access-Control-Allow-Origin: *");

@@ -23,11 +23,13 @@ export class LoginComponent {
 
   onSubmit(){
     if(this.loginForm.valid){
-      this.login.login(this.loginForm.value).subscribe(
-        (Response)=>{
-          console.log(Response);
-        }
-      )
+      this.login.login(this.loginForm.value);
+      if(this.login.auth()){
+      this.router.navigate(["/home-page"]);
+      }
+      else{
+        alert("mot de passe ou email wrong")
+      }
     }
   }
 }
