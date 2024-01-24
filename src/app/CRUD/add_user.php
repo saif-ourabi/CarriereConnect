@@ -36,7 +36,7 @@ class AddUser
                 $user = new User(
                     $user_data['nom'],
                     $user_data['prenom'],
-                    password_hash($user_data['password'], PASSWORD_DEFAULT),
+                    md5($user_data['password']),
                     $user_data['email'],
                     $user_data['cin']
                 );

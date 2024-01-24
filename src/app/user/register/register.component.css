@@ -2,3 +2,7 @@
     background-color:#E2126E;
     border-color: #E2126E;
 }
+
+body{
+    display: inline-block;
+}

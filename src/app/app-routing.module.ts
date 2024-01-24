@@ -5,6 +5,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { DetailsComponent } from './offre/details/details.component';
 import { RegisterComponent } from './user/register/register.component';
 import { LoginComponent } from './user/login/login.component';
+import { FooterComponent } from './footer/footer.component';
 
 const routes: Routes = [
   {path:"listerOffre", component:ListerOffreComponent},
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'Details/:id', component: DetailsComponent},
   {path: 'Register', component: RegisterComponent},
   {path: 'Login', component: LoginComponent},
+  {path: 'Footer', component: FooterComponent},
 ];
 
 @NgModule({
