@@ -33,14 +33,14 @@
                     </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
+                    <li class="nav-item" *ngIf="status==false">
                         <a class="nav-link" routerLink="/Register"><i class="fas fa-user mx-1"></i>Créer un compte</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" *ngIf="status==false">
                         <a class="nav-link" routerLink="/Login"><i class="fas fa-sign-in mx-1"></i>Connexion</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-sign-out mx-1"></i>déconnexion</a>
+                    <li class="nav-item" *ngIf="status">
+                        <a class="nav-link" (click)="logout()"><i class="fas fa-sign-out mx-1"></i>déconnexion</a>
                     </li>
                 </ul>
             </div>
