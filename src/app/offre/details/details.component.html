@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Modern Offer Details</title>
 </head>
 <body>
     <div class="container mt-5">
-        <h1>Offer Details</h1>
-        <div class="card mt-3">
+        <h1 class="text-center">Offer Details</h1>
+        <div class="card">
             <div class="card-body" *ngIf="offre">
                 <h5 class="card-title">{{offre.id_offre}}</h5>
                 <p class="card-text">Salary: {{offre.saliare}}</p>
                 <p class="card-text">Experience: {{offre.experience}} years</p>
                 <p class="card-text">Expiration Date: {{offre.date_exp}}</p>
                 <p class="card-text">Description:</p>
-                <p class="card-text">
-                {{offre.description}} 
-                </p>
+                <p class="card-text">{{offre.description}}</p>
+                <button class="btn btn-primary" [disabled]="!status">Apply Now</button>
             </div>
         </div>
     </div>
