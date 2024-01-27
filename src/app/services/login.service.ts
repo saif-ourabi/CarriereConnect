@@ -1,42 +1,45 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
-
-interface LoginResponse {
-  status: boolean;
-  message: string;
-  sessionId?: string;
-  userId?: number;
-}
+import { HttpClient } from '@angular/common/http';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  private url = 'http://localhost:8000/login.php';
+  private loginUrl = 'http://localhost:8000/login.php';
+  private authStatusSubject = new BehaviorSubject<boolean>(this.checkAuthStatus());
 
-
-  private authStatusSubject = new BehaviorSubject<boolean>(false);
-  
   authStatus$ = this.authStatusSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  login(userData: any): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(this.url, userData).pipe(
-      tap((rep: LoginResponse) => {
+  login(userData: any): Observable<any> {
+    return this.http.post<any>(this.loginUrl, userData).pipe(
+      tap((rep: any) => {
         if (rep.status) {
-          sessionStorage.setItem('sessionId', rep.sessionId || '');
-          sessionStorage.setItem('userId', rep.userId?.toString() || '');
+          this.setSessionData(rep);
         }
         this.authStatusSubject.next(rep.status);
+      }),
+      catchError((error) => {
+        console.error('Login failed:', error);
+        return throwError(error);
       })
     );
   }
 
-  auth(): boolean {
+  private setSessionData(rep: any): void {
+    sessionStorage.setItem('sessionId', rep.sessionId);
+    sessionStorage.setItem('userId', rep.userId);
+  }
+
+  private checkAuthStatus(): boolean {
     return sessionStorage.getItem('sessionId') !== null;
+  }
+
+  isAuthenticated(): boolean {
+    return this.checkAuthStatus();
   }
 
   logout(): void {
