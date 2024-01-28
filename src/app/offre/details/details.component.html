@@ -7,16 +7,16 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center">Offer Details</h1>
+        <h1 class="text-center">Details de l'Offer N°{{offreId}}</h1>
         <div class="card">
             <div class="card-body" *ngIf="offre">
-                <h5 class="card-title">{{offre.id_offre}}</h5>
                 <p class="card-text">Salary: {{offre.saliare}}</p>
                 <p class="card-text">Experience: {{offre.experience}} years</p>
                 <p class="card-text">Expiration Date: {{offre.date_exp}}</p>
                 <p class="card-text">Description:</p>
                 <p class="card-text">{{offre.description}}</p>
-                <button class="btn btn-primary" [disabled]="!status">Apply Now</button>
+                <button class="btn btn-secondary " [disabled]="!status">Apply Now</button><br>
+                <span *ngIf="!status" class="text-danger">Tu dois te connecter tout d'abord</span>
             </div>
         </div>
     </div>

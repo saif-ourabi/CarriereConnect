@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, MaxLengthValidator, MinLengthValidator, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
 import { RegisterService } from 'src/app/services/register.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class RegisterComponent {
   c=false;
 
 
-  constructor(private formBuilder: FormBuilder,private register: RegisterService,private router: Router) 
+  constructor(private formBuilder: FormBuilder,private register: RegisterService,private router: Router,private toast: NgToastService) 
   {
     this.registrationForm = this.formBuilder.group({
       nom:['', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]],
@@ -40,10 +41,10 @@ export class RegisterComponent {
       console.log(this.registrationForm.value);
       this.register.registerUser(this.registrationForm.value).subscribe( response => {
           if(response.status){
-            this.router.navigate(['/Login']);
+            this.toast.success({detail:"SUCCÈS",summary:'compte creé',duration:5000})           
           }
           else{
-            alert("User exists in the database");
+            this.toast.warning({detail:"AVERTISSEMENT",summary:'Utilisateur existe déjà',duration:5000})
           }
         }
           );
