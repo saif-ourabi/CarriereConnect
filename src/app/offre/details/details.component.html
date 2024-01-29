@@ -36,7 +36,7 @@
         <!-- Modal BODY -->
         <div class="modal-body">
           <div class="card p-4" style="width: 100%;">
-            <form class="needs-validation custf" novalidate [formGroup]="CandidatureForm">
+            <form class="needs-validation custf" novalidate [formGroup]="CandidatureForm" (submit)="submit()">
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="nom" class="form-label">Nom:</label>
@@ -83,13 +83,13 @@
                 <label for="CV" class="form-label">CV:</label><br>
                 <input type="file" id="cv" class="" required />
               </div>
-
+              <div class="modal-footer d-flex justify-content-center">
+                <button type="submit" class="btn btn-danger">Postuler</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+              </div>
             </form>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger">Postuler</button>
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
-          </div>
+
         </div>
       </div>
     </div>

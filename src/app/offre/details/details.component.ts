@@ -50,7 +50,6 @@ export class DetailsComponent implements OnInit {
     this.login.getUserInfo().subscribe(
       (rep)=>{
         this.user=rep
-        console.log(rep)
         this.CandidatureForm.setValue({
           nom: this.user.nom,
           prenom: this.user.prenom,
@@ -60,6 +59,10 @@ export class DetailsComponent implements OnInit {
         this.CandidatureForm.get('cin').disable();
       }
     )
+  }
+
+  submit(){
+
   }
 
   }
