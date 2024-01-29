@@ -1,24 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Offer Details</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Offer Details</title>
 </head>
+
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center">Details de l'Offer N°{{offreId}}</h1>
-        <div class="card">
-            <div class="card-body" *ngIf="offre">
-                <p class="card-text">Salary: {{offre.saliare}}</p>
-                <p class="card-text">Experience: {{offre.experience}} years</p>
-                <p class="card-text">Expiration Date: {{offre.date_exp}}</p>
-                <p class="card-text">Description:</p>
-                <p class="card-text">{{offre.description}}</p>
-                <button class="btn btn-secondary " [disabled]="!status">Apply Now</button><br>
-                <span *ngIf="!status" class="text-danger">Tu dois te connecter tout d'abord</span>
-            </div>
-        </div>
+  <div class="container mt-5">
+    <h1 class="text-center">Details de l'Offer N°{{offreId}}</h1>
+    <div class="card">
+      <div class="card-body" *ngIf="offre">
+        <p class="card-text">Salary: {{offre.saliare}}</p>
+        <p class="card-text">Experience: {{offre.experience}} years</p>
+        <p class="card-text">Expiration Date: {{offre.date_exp}}</p>
+        <p class="card-text">Description:</p>
+        <p class="card-text">{{offre.description}}</p>
+        <button class="btn btn-secondary " [disabled]="!status" data-bs-toggle="modal"data-bs-target="#myModal" (click)="enterforme()">Postuler</button><br>
+        <span *ngIf="!status" class="text-danger">Tu dois te connecter tout d'abord</span>
+      </div>
     </div>
+  </div>
+
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title" center_focus_strong>Formulaire de Candidature</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" data-bs-dismiss="modal"></button>
+        </div>
+
+        <!-- Modal BODY -->
+        <div class="modal-body">
+          <div class="card p-4" style="width: 100%;">
+            <form class="needs-validation custf" novalidate [formGroup]="CandidatureForm">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="nom" class="form-label">Nom:</label>
+                  <input type="text" id="nom" class="form-control" formControlName="nom" required/>
+                  <div *ngIf="CandidatureForm.get('nom').errors?.['required'] && c" class="text-danger">
+                    Le champs nom est requis
+                  </div>
+                  <div *ngIf="CandidatureForm.get('nom').errors?.['pattern'] && c " class="text-danger">
+                    Le champ nom ne doit pas contenir des chiffres ni des caractères spéciaux.
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="prenom" class="form-label">Prenom:</label>
+                  <input type="text" id="prenom" class="form-control" formControlName="prenom" required />
+                  <div *ngIf="CandidatureForm.get('prenom').errors?.['required'] && c" class="text-danger">
+                    Le champs prenom est requis
+                  </div>
+                  <div *ngIf="CandidatureForm.get('prenom').errors?.['pattern'] && c" class="text-danger">
+                    Le champ prenom ne doit pas contenir des chiffres ni des caractères spéciaux.
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="cin" class="form-label">CIN:</label>
+                  <input type="text" id="cin" class="form-control" formControlName="cin" required/>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="email" class="form-label">Email:</label>
+                  <input type="email" id="email" class="form-control" formControlName="email" required />
+                  <div *ngIf="CandidatureForm.get('email').errors?.['email'] && c" class="text-danger">
+                    Email doit etre valide.
+                  </div>
+                  <div *ngIf="CandidatureForm.get('email').errors?.['required'] && c" class="text-danger">
+                    Le champ Email est requis.
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="CV" class="form-label">CV:</label><br>
+                <input type="file" id="cv" class="" required />
+              </div>
+
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger">Postuler</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 </body>
+
 </html>

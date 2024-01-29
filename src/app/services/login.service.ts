@@ -7,7 +7,7 @@ import { catchError, tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class LoginService {
-  private loginUrl = 'http://localhost:8000/login.php';
+  private Url = 'http://localhost:8000/';
   private authStatusSubject = new BehaviorSubject<boolean>(this.checkAuthStatus());
 
   authStatus$ = this.authStatusSubject.asObservable();
@@ -15,7 +15,7 @@ export class LoginService {
   constructor(private http: HttpClient) {}
 
   login(userData: any): Observable<any> {
-    return this.http.post<any>(this.loginUrl, userData).pipe(
+    return this.http.post<any>(this.Url+"login.php", userData).pipe(
       tap((rep: any) => {
         if (rep.status) {
           this.setSessionData(rep);
@@ -32,6 +32,7 @@ export class LoginService {
   private setSessionData(rep: any): void {
     sessionStorage.setItem('sessionId', rep.sessionId);
     sessionStorage.setItem('userId', rep.userId);
+
   }
 
   private checkAuthStatus(): boolean {
@@ -45,5 +46,9 @@ export class LoginService {
   logout(): void {
     sessionStorage.clear();
     this.authStatusSubject.next(false);
+  }
+
+  getUserInfo(): Observable<any[]> {
+    return this.http.post<any[]>(this.Url + "getUtilisateurinfo.php", { "id": sessionStorage.getItem("userId") });
   }
 }
