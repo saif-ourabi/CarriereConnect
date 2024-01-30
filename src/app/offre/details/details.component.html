@@ -18,7 +18,7 @@
         <p class="card-text">Description:</p>
         <p class="card-text">{{offre.description}}</p>
         <button class="btn btn-secondary " [disabled]="!status" data-bs-toggle="modal"data-bs-target="#myModal" (click)="enterforme()">Postuler</button><br>
-        <span *ngIf="!status" class="text-danger">Tu dois te connecter tout d'abord</span>
+        <div *ngIf="!status" class="text-danger callout">Tu dois te connecter tout d'abord</div>
       </div>
     </div>
   </div>
@@ -40,7 +40,7 @@
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="nom" class="form-label">Nom:</label>
-                  <input type="text" id="nom" class="form-control" formControlName="nom" required/>
+                  <input type="text" id="nom" class="form-control" formControlName="nom" required />
                   <div *ngIf="CandidatureForm.get('nom').errors?.['required'] && c" class="text-danger">
                     Le champs nom est requis
                   </div>
@@ -64,7 +64,7 @@
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="cin" class="form-label">CIN:</label>
-                  <input type="text" id="cin" class="form-control" formControlName="cin" required/>
+                  <input type="text" id="cin" class="form-control" formControlName="cin" readonly/>
                 </div>
 
                 <div class="col-md-6 mb-3">
@@ -81,7 +81,11 @@
 
               <div class="mb-3">
                 <label for="CV" class="form-label">CV:</label><br>
-                <input type="file" id="cv" class="" required />
+                <input type="file" id="cv" class="" required  formControlName="cv" accept=".pdf"  />
+
+                <div *ngIf="CandidatureForm.get('cv').errors?.['required'] && c" class="text-danger">
+                  Le champ CV est requis.
+                </div>
               </div>
               <div class="modal-footer d-flex justify-content-center">
                 <button type="submit" class="btn btn-danger">Postuler</button>
@@ -94,8 +98,7 @@
       </div>
     </div>
   </div>
-
-
+  <ng-toast></ng-toast> 
 </body>
 
 </html>

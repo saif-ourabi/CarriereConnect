@@ -1,8 +1,9 @@
 import { CandidatureComponent } from './../candidature/candidature.component';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
 import { LoginService } from 'src/app/services/login.service';
 import { OffreserviceService } from 'src/app/services/offreservice.service';
 
@@ -18,15 +19,18 @@ export class DetailsComponent implements OnInit {
   status:boolean;
   userid:any
   user:any
-  CandidatureForm: any;
+  CandidatureForm: FormGroup;
   c=false;
-  constructor(private offreserviceService: OffreserviceService,private route: ActivatedRoute,private login:LoginService,private formBuilder: FormBuilder) {
+  constructor(private offreserviceService: OffreserviceService,private route: ActivatedRoute,private login:LoginService,private formBuilder: FormBuilder,private toast: NgToastService) {
     this.CandidatureForm = this.formBuilder.group({
       nom:["", [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]],
       prenom:["",[Validators.required,Validators.pattern(/^[a-zA-Z]+$/)]],
-      cin:["",[Validators.required,Validators.minLength(8),Validators.maxLength(8),Validators.pattern(/^[0-9]+$/)]],
+      cin:[""],
       email: ["", [Validators.required, Validators.email]],
+      cv:["", [Validators.required]],
+      id_offre:[""]
     });
+
   }
 
   ngOnInit(): void {
@@ -55,14 +59,26 @@ export class DetailsComponent implements OnInit {
           prenom: this.user.prenom,
           cin:this.user.cin,
           email: this.user.email,
+          cv:"",
+          id_offre:this.offreId
         });
-        this.CandidatureForm.get('cin').disable();
-      }
+      },
     )
   }
 
   submit(){
-
+    this.c=true;
+    if(this.CandidatureForm.valid){
+      this.login.psotule(this.CandidatureForm.value).subscribe((rep:any)=>{
+       if(rep!=1){
+        this.toast.error({detail:"ERROR",summary:"Tu as déjà postulé"})
+       }
+       else{
+        this.toast.success({detail:"SUCCÈS",summary:"L'opération a été effectuée avec succès",duration:5000})
+       }
+      }
+      );
+    }
   }
 
   }

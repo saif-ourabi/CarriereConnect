@@ -51,4 +51,12 @@ export class LoginService {
   getUserInfo(): Observable<any[]> {
     return this.http.post<any[]>(this.Url + "getUtilisateurinfo.php", { "id": sessionStorage.getItem("userId") });
   }
+
+  psotule(data): Observable<any[]> {
+    return this.http.post<any[]>(this.Url + "cadidature.php", {
+      "id_user": sessionStorage.getItem("userId"),
+      ...data
+    }); 
+  }
+  
 }
