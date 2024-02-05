@@ -10,7 +10,7 @@
 
 
 <body>
-    <nav class="navbar navbar-expand-lg nav_custom">
+    <nav class="navbar navbar-expand-lg nav_custom" *ngIf="userRole=='user' || userRole==''">
         <div class="container-fluid">
             <a class="navbar-brand" routerLink="/home-page">Enda Tamweel</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -25,11 +25,8 @@
                     <li class="nav-item">
                         <a class="nav-link" routerLink="/listerOffre">Offre</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Nos Catégories</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contacter nous</a>
+                    <li class="nav-item" *ngIf="status==true">
+                        <a class="nav-link" routerLink="/candidature">Mes postulations</a>
                     </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">

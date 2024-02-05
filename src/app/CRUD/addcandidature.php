@@ -1,5 +1,4 @@
 <?php
-
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
@@ -10,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 require_once "connexion.php";
 require "user.php";
 
-class cadidature
+class candidature
 {
     private $connex;
 
@@ -36,7 +35,7 @@ class cadidature
         $resof = $resof->fetch(PDO::FETCH_ASSOC);
         $datpost = date("Y-m-d");
         if (strtotime($resof["date_exp"]) >= strtotime($datpost)) {
-            $sql = "INSERT INTO cadidature VALUES ('$id_offre','$datpost','$id_user','$nom','$prenom','$cv','$cin','$email');";
+            $sql = "INSERT INTO candidature VALUES ('$id_offre','$datpost','$id_user','$nom','$prenom','$cv','$cin','$email');";
             try {
                 $res = $this->connex->exec($sql);
                 header("Access-Control-Allow-Origin: *");
@@ -44,11 +43,17 @@ class cadidature
                 header("Access-Control-Allow-Headers: Content-Type, Authorization");
                 echo json_encode($res);
             } catch (Exception) {
+                header("Access-Control-Allow-Origin: *");
+                header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+                header("Access-Control-Allow-Headers: Content-Type, Authorization");
                 echo json_encode("err");
             }
+        }
+        else{
+            echo json_encode("err date");
         }
     }
 }
 
-$cadidature = new cadidature();
-$cadidature->postule();
+$candidature = new candidature();
+$candidature->postule();

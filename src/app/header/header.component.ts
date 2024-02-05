@@ -10,6 +10,7 @@ import { NgToastService } from 'ng-angular-popup';
 })
 export class HeaderComponent implements OnInit {
   status: boolean = false;
+  userRole=''
 
   constructor(private router: Router, private login: LoginService, private toast: NgToastService ) {}
 
@@ -18,6 +19,9 @@ export class HeaderComponent implements OnInit {
       this.status = isLoggedIn;
       if(isLoggedIn){
         this.toast.success({detail:"SUCCÈS",summary:'Vous êtes connecté',duration:5000})
+        this.login.getUserInfo().subscribe((rep:any)=>{
+          this.userRole=rep.role;
+        })
       }
       else{
         this.toast.info({detail:"INFO",summary:'Vous êtes deconnecté',duration:5000})

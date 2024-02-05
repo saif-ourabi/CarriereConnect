@@ -15,6 +15,7 @@ import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgToastModule } from 'ng-angular-popup';
 import { CandidatureComponent } from './offre/candidature/candidature.component';
+import { AdminComponent } from './user/admin/admin.component';
 
 
 
@@ -29,6 +30,7 @@ import { CandidatureComponent } from './offre/candidature/candidature.component'
     RegisterComponent,
     FooterComponent,
     CandidatureComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,

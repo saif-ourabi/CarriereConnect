@@ -27,7 +27,16 @@ export class LoginComponent {
       this.authService.login(this.loginForm.value).subscribe(
         (response) => {
           if (response.status) {
-            this.router.navigate(['/home-page']);
+            this.authService.getUserInfo().subscribe((rep:any)=>{
+              if(rep.role=="admin"){
+                this.router.navigate(["/admin"])
+              }
+              else{
+                this.router.navigate(["/home-page"])
+              }
+            })
+
+
           } else {
              this.toast.error({detail:"ERROR",summary:"Mot de passe ou email incorrect"});
           }

@@ -41,7 +41,10 @@ export class RegisterComponent {
       console.log(this.registrationForm.value);
       this.register.registerUser(this.registrationForm.value).subscribe( response => {
           if(response.status){
-            this.toast.success({detail:"SUCCÈS",summary:'compte creé',duration:5000})           
+            this.toast.success({detail:"SUCCÈS",summary:'compte creé',duration:5000})  
+            setTimeout(() => {
+              this.router.navigate(['/Login'])
+            }, 2000);         
           }
           else{
             this.toast.warning({detail:"AVERTISSEMENT",summary:'Utilisateur existe déjà',duration:5000})

@@ -39,10 +39,7 @@ export class LoginService {
     return sessionStorage.getItem('sessionId') !== null;
   }
 
-  isAuthenticated(): boolean {
-    return this.checkAuthStatus();
-  }
-
+  
   logout(): void {
     sessionStorage.clear();
     this.authStatusSubject.next(false);
@@ -52,11 +49,6 @@ export class LoginService {
     return this.http.post<any[]>(this.Url + "getUtilisateurinfo.php", { "id": sessionStorage.getItem("userId") });
   }
 
-  psotule(data): Observable<any[]> {
-    return this.http.post<any[]>(this.Url + "cadidature.php", {
-      "id_user": sessionStorage.getItem("userId"),
-      ...data
-    }); 
-  }
+
   
 }
