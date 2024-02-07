@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
-import { CadidatureService } from 'src/app/services/cadidature.service';
+import { candidatureService } from 'src/app/services/candidature.service';
 import { LoginService } from 'src/app/services/login.service';
 import { OffreserviceService } from 'src/app/services/offreservice.service';
 
@@ -28,7 +28,7 @@ export class DetailsComponent implements OnInit {
     private login: LoginService,
     private formBuilder: FormBuilder,
     private toast: NgToastService,
-    private post: CadidatureService
+    private post: candidatureService
   ) {
     this.CandidatureForm = this.formBuilder.group({
       nom: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]],

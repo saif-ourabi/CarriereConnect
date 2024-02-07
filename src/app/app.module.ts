@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule} from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ListerOffreComponent } from './offre/lister-offre/lister-offre.component';
@@ -15,7 +15,8 @@ import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgToastModule } from 'ng-angular-popup';
 import { CandidatureComponent } from './offre/candidature/candidature.component';
-import { AdminComponent } from './user/admin/admin.component';
+
+
 
 
 
@@ -29,8 +30,7 @@ import { AdminComponent } from './user/admin/admin.component';
     LoginComponent,
     RegisterComponent,
     FooterComponent,
-    CandidatureComponent,
-    AdminComponent,
+    CandidatureComponent
   ],
   imports: [
     BrowserModule,

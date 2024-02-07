@@ -10,7 +10,7 @@
 
 
 <body>
-    <nav class="navbar navbar-expand-lg nav_custom" *ngIf="userRole=='user' || userRole==''">
+    <nav class="navbar navbar-expand-lg nav_custom">
         <div class="container-fluid">
             <a class="navbar-brand" routerLink="/home-page">Enda Tamweel</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -34,7 +34,7 @@
                         <a class="nav-link" routerLink="/Register"><i class="fas fa-user mx-1"></i>Créer un compte</a>
                     </li>
                     <li class="nav-item" *ngIf="status==false">
-                        <a class="nav-link" routerLink="/Login"><i class="fas fa-sign-in mx-1"></i>Connexion</a>
+                        <a class="nav-link" routerLink="/login"><i class="fas fa-sign-in mx-1"></i>Connexion</a>
                     </li>
                     <li class="nav-item" *ngIf="status">
                         <a class="nav-link" (click)="logout()"><i class="fas fa-sign-out mx-1"></i>déconnexion</a>

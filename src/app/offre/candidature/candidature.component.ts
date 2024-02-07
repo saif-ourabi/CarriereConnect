@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
-import { CadidatureService } from 'src/app/services/cadidature.service';
+import { candidatureService } from 'src/app/services/candidature.service';
 import { OffreserviceService } from 'src/app/services/offreservice.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class CandidatureComponent implements OnInit {
 
   constructor(
     private offreserviceService: OffreserviceService,
-    private candidature: CadidatureService,
+    private candidature: candidatureService,
   ) {}
 
   ngOnInit(): void {

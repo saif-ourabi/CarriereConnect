@@ -1,21 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, MaxLengthValidator, MinLengthValidator, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { RegisterService } from 'src/app/services/register.service';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit{
   registrationForm: FormGroup;
   rep:any;
   c=false;
 
 
-  constructor(private formBuilder: FormBuilder,private register: RegisterService,private router: Router,private toast: NgToastService) 
+  constructor(private formBuilder: FormBuilder,
+    private register: RegisterService,
+    private router: Router,
+    private toast: NgToastService,
+    private login:LoginService
+    ) 
   {
     this.registrationForm = this.formBuilder.group({
       nom:['', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]],
@@ -53,7 +59,13 @@ export class RegisterComponent {
           );
       
     }
-    else{
     }
+
+    ngOnInit(): void {
+      this.login.authStatus$.subscribe((rep)=>{
+        if(rep){
+          this.router.navigate(["/home-page"])
+        }
+      })
     }
   } 

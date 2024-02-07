@@ -28,7 +28,8 @@ class AddUser
 
         if ($user_data && isset($user_data['cin'])) {
             $cin = htmlspecialchars($user_data['cin']);
-            $sql = "SELECT * FROM user WHERE cin=$cin";
+            $email=htmlspecialchars($user_data['email']);
+            $sql = "SELECT * FROM user WHERE cin=$cin OR email='$email'";
             $res = $this->connex->query($sql);
             $res = $res->fetchAll(PDO::FETCH_ASSOC);
 
