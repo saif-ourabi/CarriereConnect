@@ -21,12 +21,14 @@ export class HeaderComponent implements OnInit {
         this.toast.success({detail:"SUCCÈS",summary:'Vous êtes connecté',duration:5000})
         this.login.getUserInfo().subscribe((rep:any)=>{
           this.userRole=rep.role;
+          console.log(this.userRole)
         })
       }
       else{
         this.toast.info({detail:"INFO",summary:'Vous êtes deconnecté',duration:5000})
       }
     });
+
   }
 
   logout(): void {

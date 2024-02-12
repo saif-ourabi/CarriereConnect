@@ -15,6 +15,8 @@ import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgToastModule } from 'ng-angular-popup';
 import { CandidatureComponent } from './offre/candidature/candidature.component';
+import { AdminComponent } from './admin/admin.component';
+import { DataTablesModule } from 'angular-datatables';
 
 
 
@@ -30,7 +32,8 @@ import { CandidatureComponent } from './offre/candidature/candidature.component'
     LoginComponent,
     RegisterComponent,
     FooterComponent,
-    CandidatureComponent
+    CandidatureComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +44,7 @@ import { CandidatureComponent } from './offre/candidature/candidature.component'
     ReactiveFormsModule,
     BrowserAnimationsModule,
     NgToastModule,
+    DataTablesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

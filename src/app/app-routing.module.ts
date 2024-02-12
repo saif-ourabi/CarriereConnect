@@ -8,6 +8,8 @@ import { LoginComponent } from './user/login/login.component';
 import { FooterComponent } from './footer/footer.component';
 import { CandidatureComponent } from './offre/candidature/candidature.component';
 import { UserGuard } from './guards/user.guard';
+import { AdminComponent } from './admin/admin.component';
+import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   { path:'', redirectTo:'/home-page', pathMatch: 'full' },
@@ -18,6 +20,7 @@ const routes: Routes = [
   {path: 'Footer', component: FooterComponent},
   {path: 'candidature', component:CandidatureComponent,canActivate:[UserGuard]},
   {path: 'login', component: LoginComponent},
+  {path: 'admin', component: AdminComponent,canActivate:[AdminGuard]}
 ];
 
 @NgModule({

@@ -28,6 +28,9 @@
                     <li class="nav-item" *ngIf="status==true">
                         <a class="nav-link" routerLink="/candidature">Mes postulations</a>
                     </li>
+                    <li class="nav-item" *ngIf="status==true && userRole=='admin'">
+                        <a class="nav-link" routerLink="/admin">Dashboard Admin</a>
+                    </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
                     <li class="nav-item" *ngIf="status==false">

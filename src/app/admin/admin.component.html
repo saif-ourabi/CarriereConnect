@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <div class="container mt-3">      
+    <div class="row">
+      <!-- Iterate over offers and create card for each offer -->
+      <div class="col-md-4 mb-3" *ngFor="let f of offres | paginate: { itemsPerPage: 10, currentPage: p }">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">ID: {{f.id_offre}}</h5>
+            <p class="card-text">Experience: {{f.experience}}</p>
+            <p class="card-text">Salaire: {{f.salaire}}</p>
+            <p class="card-text">Date d'expérience: {{f.date_exp}}</p>
+            <a class="btn btn-outline-primary">Modifies</a>
+            <a class="btn btn btn-outline-danger">Supprimes</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</body>
+</html>

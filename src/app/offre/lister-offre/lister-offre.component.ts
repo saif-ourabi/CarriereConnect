@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { OffreserviceService } from '../../services/offreservice.service';
 import { Subject } from 'rxjs';
 
@@ -10,12 +10,12 @@ import { Subject } from 'rxjs';
 export class ListerOffreComponent implements OnInit {
   offres: any[];
   p: number = 1;
-
   constructor(private offreserviceService: OffreserviceService) { }
 
   ngOnInit(): void {
     this.offreserviceService.getOffres().subscribe(data => {
       this.offres = data;
     });
+    
   }
 }
