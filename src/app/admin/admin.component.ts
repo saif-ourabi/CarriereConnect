@@ -17,4 +17,15 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  deleteoffer(id){
+    console.log("tezfzzf")
+    this.offreserviceService.deleteOffre(id).subscribe((rep:any)=>{
+      if(rep==1){
+        this.ngOnInit()
+      }
+    })
+  }
+
+  
+
 }

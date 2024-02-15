@@ -30,6 +30,10 @@ export class LoginComponent implements OnInit {
       this.login.login(this.loginForm.value).subscribe(
         (response) => {
           if (response.status) {
+            console.log(response)
+            this.login.getUserInfo().subscribe((rep)=>{
+              console.log(rep);
+            })
             this.router.navigate(["/home-page"])
 
           } else {

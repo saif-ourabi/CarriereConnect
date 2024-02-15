@@ -2,25 +2,26 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { CookieService } from 'ngx-cookie';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  private Url = 'http://localhost:8000/';
+  private apiUrl = 'http://localhost:8000/';
   private authStatusSubject = new BehaviorSubject<boolean>(this.checkAuthStatus());
 
   authStatus$ = this.authStatusSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private CookieModule: CookieService) {}
 
   login(userData: any): Observable<any> {
-    return this.http.post<any>(this.Url+"login.php", userData).pipe(
-      tap((rep: any) => {
-        if (rep.status) {
-          this.setSessionData(rep);
+    return this.http.post<any>(this.apiUrl + 'login.php', userData).pipe(
+      tap((response: any) => {
+        if (response.status) {
+          this.setSessionData(response);
         }
-        this.authStatusSubject.next(rep.status);
+        this.authStatusSubject.next(response.status);
       }),
       catchError((error) => {
         console.error('Login failed:', error);
@@ -29,26 +30,23 @@ export class LoginService {
     );
   }
 
-  private setSessionData(rep: any): void {
-    sessionStorage.setItem('sessionId', rep.sessionId);
-    sessionStorage.setItem('userId', rep.userId);
-
+  private setSessionData(response: any): void {
+    this.CookieModule.putObject('sessionId', response.sessionId);
+    this.CookieModule.putObject('userId', response.userId);
   }
 
   private checkAuthStatus(): boolean {
-    return sessionStorage.getItem('sessionId') !== null;
+    return this.CookieModule.get('sessionId') !== '';
   }
 
-  
   logout(): void {
-    sessionStorage.clear();
+    this.CookieModule.remove('sessionId');
+    this.CookieModule.remove('userId');
     this.authStatusSubject.next(false);
   }
 
   getUserInfo(): Observable<any[]> {
-    return this.http.post<any[]>(this.Url + "getUtilisateurinfo.php", { "id": sessionStorage.getItem("userId") });
+    const userId = this.CookieModule.get('userId');
+    return this.http.post<any[]>(this.apiUrl + 'getUtilisateurinfo.php', { id: userId });
   }
-
-
-  
 }

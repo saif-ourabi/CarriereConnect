@@ -17,6 +17,7 @@ import { NgToastModule } from 'ng-angular-popup';
 import { CandidatureComponent } from './offre/candidature/candidature.component';
 import { AdminComponent } from './admin/admin.component';
 import { DataTablesModule } from 'angular-datatables';
+import { CookieModule } from 'ngx-cookie';
 
 
 
@@ -44,7 +45,8 @@ import { DataTablesModule } from 'angular-datatables';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     NgToastModule,
-    DataTablesModule
+    DataTablesModule,
+    CookieModule.withOptions()
   ],
   providers: [],
   bootstrap: [AppComponent]
