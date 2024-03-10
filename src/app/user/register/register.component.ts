@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit{
     private router: Router,
     private toast: NgToastService,
     private login:LoginService
-    ) 
+    )
   {
     this.registrationForm = this.formBuilder.group({
       nom:['', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]],
@@ -43,21 +43,21 @@ export class RegisterComponent implements OnInit{
 }
 
   registerUser() {
-    if (this.registrationForm.valid) {  
+    if (this.registrationForm.valid) {
       console.log(this.registrationForm.value);
       this.register.registerUser(this.registrationForm.value).subscribe( response => {
           if(response.status){
-            this.toast.success({detail:"SUCCÈS",summary:'compte creé',duration:5000})  
+            this.toast.success({detail:"SUCCÈS",summary:'compte creé',duration:5000})
             setTimeout(() => {
-              this.router.navigate(['/Login'])
-            }, 2000);         
+              this.router.navigate(['/login'])
+            }, 2000);
           }
           else{
             this.toast.warning({detail:"AVERTISSEMENT",summary:'Utilisateur existe déjà',duration:5000})
           }
         }
           );
-      
+
     }
     }
 
@@ -68,4 +68,4 @@ export class RegisterComponent implements OnInit{
         }
       })
     }
-  } 
+  }

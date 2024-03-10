@@ -12,15 +12,15 @@ import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
-  { path:'', redirectTo:'/home-page', pathMatch: 'full' },
+  { path:'', redirectTo:'home-page', pathMatch: 'full' },
   {path:'listerOffre', component:ListerOffreComponent},
   {path:'home-page', component:HomePageComponent},
-  {path: 'Details/:id', component: DetailsComponent},
-  {path: 'Register', component: RegisterComponent},
-  {path: 'Footer', component: FooterComponent},
-  {path: 'candidature', component:CandidatureComponent,canActivate:[UserGuard]},
-  {path: 'login', component: LoginComponent},
-  {path: 'admin', component: AdminComponent,canActivate:[AdminGuard]}
+  {path:'Details/:id', component: DetailsComponent},
+  {path:'Register', component: RegisterComponent},
+  {path:'Footer', component: FooterComponent},
+  {path:'candidature', component:CandidatureComponent,canActivate:[UserGuard]},
+  {path:'login', component: LoginComponent},
+  {path:'admin', component: AdminComponent,canActivate:[AdminGuard]}
 ];
 
 @NgModule({

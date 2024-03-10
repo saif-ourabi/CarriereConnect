@@ -15,13 +15,13 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router, private login: LoginService, private toast: NgToastService ) {}
 
   ngOnInit(): void {
+    console.log(this.login.checkAuthStatus())
     this.login.authStatus$.subscribe((isLoggedIn: boolean) => {
       this.status = isLoggedIn;
       if(isLoggedIn){
         this.toast.success({detail:"SUCCÈS",summary:'Vous êtes connecté',duration:5000})
         this.login.getUserInfo().subscribe((rep:any)=>{
           this.userRole=rep.role;
-          console.log(this.userRole)
         })
       }
       else{
