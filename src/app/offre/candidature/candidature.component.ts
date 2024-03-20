@@ -30,8 +30,6 @@ export class CandidatureComponent implements OnInit {
           const matchingUser = userData.find((userOffer) => userOffer.id_offre === offer.id_offre);
           return { ...offer, user: matchingUser };
         });
-
-        console.log(this.combinedData);
       });
     });
   }

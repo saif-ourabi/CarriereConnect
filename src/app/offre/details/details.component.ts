@@ -1,12 +1,11 @@
-import { CandidatureComponent } from './../candidature/candidature.component';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { candidatureService } from 'src/app/services/candidature.service';
 import { LoginService } from 'src/app/services/login.service';
 import { OffreserviceService } from 'src/app/services/offreservice.service';
+import { CookieModule, CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-details',
@@ -28,7 +27,8 @@ export class DetailsComponent implements OnInit {
     private login: LoginService,
     private formBuilder: FormBuilder,
     private toast: NgToastService,
-    private post: candidatureService
+    private candidatureService: candidatureService,
+    private CookieModule: CookieService
   ) {
     this.CandidatureForm = this.formBuilder.group({
       nom: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]],
@@ -37,12 +37,14 @@ export class DetailsComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       cv: ['', [Validators.required]],
       id_offre: [''],
+      id_user:['']
     });
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.offreId = params.get('id');
+      this.userid=this.CookieModule.get("userId");
     });
 
     this.offreserviceService.getOffres().subscribe((data) => {
@@ -52,13 +54,13 @@ export class DetailsComponent implements OnInit {
 
     this.login.authStatus$.subscribe((isLoggedIn: boolean) => {
       this.status = isLoggedIn;
-      this.userid = sessionStorage.getItem('userId');
     });
   }
 
   enterforme() {
     this.login.getUserInfo().subscribe((rep) => {
       this.user = rep;
+      const userId = this.userid.replace(/^"(.*)"$/, '$1');
       this.CandidatureForm.setValue({
         nom: this.user.nom,
         prenom: this.user.prenom,
@@ -66,6 +68,7 @@ export class DetailsComponent implements OnInit {
         email: this.user.email,
         cv: '',
         id_offre: this.offreId,
+        id_user: userId
       });
     });
   }
@@ -73,22 +76,16 @@ export class DetailsComponent implements OnInit {
   submit() {
     this.c = true;
     if (this.CandidatureForm.valid) {
-      this.post.psotule(this.CandidatureForm.value).subscribe((rep: any) => {
-        if (rep != 1) {
-          if (rep == 'err') {
-            this.toast.error({
-              detail: 'ERROR',
-              summary: 'Tu as déjà postulé',
-            });
+      console.log(this.CandidatureForm.value)
+      this.candidatureService.psotule(this.CandidatureForm.value).subscribe((rep: any) => {
+        if (rep.state==false) {
+          if (rep.message =='Database error') {
+            this.toast.error({detail: 'ERROR',summary: 'Tu as déjà postulé'});
           } else {
             this.toast.error({ detail: 'ERROR', summary: "L'offre a expiré"});
           }
         } else {
-          this.toast.success({
-            detail: 'SUCCÈS',
-            summary: "L'opération a été effectuée avec succès",
-            duration: 5000,
-          });
+          this.toast.success({detail: 'SUCCÈS',summary: "L'opération a été effectuée avec succès",duration: 5000});
         }
       });
     }

@@ -29,8 +29,8 @@ class candidature
         $email = $data["email"];
         $id_user = $data["id_user"];
         $id_offre = $data["id_offre"];
-        $cv = $data["id_offre"];
-        $sql = "SELECT * FROM offre WHERE id_offre='$id_offre'";
+        $cv = $data["cv"];
+        $sql = "SELECT * FROM offre WHERE id_offre=$id_offre";
         $resof = $this->connex->query($sql);
         $resof = $resof->fetch(PDO::FETCH_ASSOC);
         $datpost = date("Y-m-d");
@@ -38,22 +38,20 @@ class candidature
             $sql = "INSERT INTO candidature VALUES ('$id_offre','$datpost','$id_user','$nom','$prenom','$cv','$cin','$email');";
             try {
                 $res = $this->connex->exec($sql);
-                header("Access-Control-Allow-Origin: *");
-                header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-                header("Access-Control-Allow-Headers: Content-Type, Authorization");
-                echo json_encode($res);
-            } catch (Exception) {
-                header("Access-Control-Allow-Origin: *");
-                header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-                header("Access-Control-Allow-Headers: Content-Type, Authorization");
-                echo json_encode("err");
+                header("Content-Type: application/json");
+                echo json_encode(["state" => true, "message" => "Candidature successfully added"]);
+            } catch (Exception $e) {
+                header("Content-Type: application/json");
+                echo json_encode(["state" => false, "message" => "Database error"]);
             }
         }
         else{
-            echo json_encode("err date");
+            header("Content-Type: application/json");
+            echo json_encode(["state" => false, "message" => "Offer expired"]);
         }
     }
 }
 
 $candidature = new candidature();
 $candidature->postule();
+?>
