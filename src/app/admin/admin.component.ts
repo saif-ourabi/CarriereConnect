@@ -17,6 +17,8 @@ export class AdminComponent implements OnInit {
     });
   }
 
+
+
   deleteoffer(id){
     this.offreserviceService.deleteOffre(id).subscribe((rep:any)=>{
       if(rep==1){
@@ -24,6 +26,8 @@ export class AdminComponent implements OnInit {
       }
     })
   }
+
+  
 
   
 

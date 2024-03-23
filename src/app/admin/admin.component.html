@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-  <div class="container mt-3">      
+  <div class="container mt-3">
     <div class="row">
       <!-- Iterate over offers and create card for each offer -->
       <div class="col-md-4 mb-3" *ngFor="let f of offres | paginate: { itemsPerPage: 10, currentPage: p }">
@@ -16,13 +16,45 @@
             <p class="card-text">Experience: {{f.experience}}</p>
             <p class="card-text">Salaire: {{f.salaire}}</p>
             <p class="card-text">Date d'expérience: {{f.date_exp}}</p>
-            <a class="btn btn-outline-primary">Modifies</a>
-            <a class="btn btn btn-outline-danger" (click)="deleteoffer(f.id_offre)">Supprimes</a>
+            <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal"data-bs-target="#myModal">Modifier</a> <!-- Changed "Modifies" to "Modifier" -->
+            <a href="#" class="btn btn-outline-danger" (click)="deleteoffer(f.id_offre)">Supprimer</a> <!-- Changed "Supprimes" to "Supprimer" -->
           </div>
         </div>
       </div>
     </div>
+    <!-- Include pagination-controls -->
     <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Formulaire de Candidature</h4> <!-- Removed unnecessary attribute "center_focus_strong" -->
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <!-- Modal BODY -->
+        <div class="modal-body">
+          <div class="card p-4" style="width: 100%;">
+            <form class="needs-validation custf" novalidate [formGroup]="">
+              <div class="row">
+                <!-- Add form elements here -->
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer d-flex justify-content-center">
+          <button type="submit" class="btn btn-danger" id="sbt" data-bs-dismiss="modal">Postuler</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 </html>

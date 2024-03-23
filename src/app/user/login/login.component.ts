@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
             this.login.getUserInfo().subscribe((rep)=>{
               console.log(rep);
             })
+            this.toast.success({detail:"SUCCÈS",summary:'Vous êtes connecté',duration:5000})
             this.router.navigate(["/home-page"])
 
           } else {
