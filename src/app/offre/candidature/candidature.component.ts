@@ -22,14 +22,16 @@ export class CandidatureComponent implements OnInit {
   ngOnInit(): void {
     this.candidature.getcandidature().subscribe((userData) => {
       this.offreserviceService.getOffres().subscribe((offerData) => {
-        const filteredOffers = offerData.filter((offer) =>
-          userData.some((userOffer) => userOffer.id_offre === offer.id_offre)
-        );
+        if (Array.isArray(userData)) {
+          const filteredOffers = offerData.filter((offer)=>
+            userData.some((userOffer) => userOffer.id_offre === offer.id_offre)
+          );
 
-        this.combinedData = filteredOffers.map((offer) => {
-          const matchingUser = userData.find((userOffer) => userOffer.id_offre === offer.id_offre);
-          return { ...offer, user: matchingUser };
-        });
+          this.combinedData = filteredOffers.map((offer) => {
+            const matchingUser = userData.find((userOffer) => userOffer.id_offre === offer.id_offre);
+            return { ...offer, user: matchingUser };
+          });
+        }
       });
     });
   }

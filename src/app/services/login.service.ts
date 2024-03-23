@@ -11,7 +11,7 @@ export class LoginService {
 
   constructor(private http: HttpClient) {}
 
-  private authStatusSubject = new BehaviorSubject<boolean>(false); // Initialize with false
+  private authStatusSubject = new BehaviorSubject<boolean>(false);
 
   authStatus$ = this.authStatusSubject.asObservable();
 

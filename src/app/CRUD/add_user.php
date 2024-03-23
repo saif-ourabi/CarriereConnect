@@ -42,12 +42,12 @@ class AddUser
                     $user_data['cin']
                 );
 
-                $sql = "INSERT INTO user (id_user, nom, prenom, password, email, cin, role) VALUES 
-                    (NULL, 
-                    '{$user->__get("nom")}', 
-                    '{$user->__get("prenom")}', 
-                    '{$user->__get("password")}', 
-                    '{$user->__get("email")}', 
+                $sql = "INSERT INTO user (id_user,nom, prenom, password, email, cin, role) VALUES
+                    (NULL,
+                    '{$user->__get("nom")}',
+                    '{$user->__get("prenom")}',
+                    '{$user->__get("password")}',
+                    '{$user->__get("email")}',
                     '{$user->__get("cin")}',
                     'user');";
 

@@ -6,7 +6,7 @@ class offre{
     private $date_exp;
     private $description;
 
-   
+
     public function __construct($s,$ex,$dat,$des)
     {
         $this->salaire=$s;
@@ -19,7 +19,7 @@ class offre{
     {
         return $this->$name;
     }
-    
+
     public function __set($name, $value)
     {
         $this->$name=$value;

@@ -34,7 +34,7 @@ class login
             header("Access-Control-Allow-Origin: *");
             header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
             header("Access-Control-Allow-Headers: Content-Type, Authorization");
-            
+
             if (!empty($res)&& md5($user_data["password"])==$res[0]["password"]) {
                 $UserID=$res[0]['id_user'];
                 $jwt=generate_jwt_token($UserID,$key);
@@ -54,13 +54,11 @@ class login
 function generate_jwt_token($user_id, $key) {
     $issued_at = time();
     $expiration_time = $issued_at + (60 * 60);
-
     $payload = array(
         'iat' => $issued_at,
         'exp' => $expiration_time,
         'sub' => $user_id
     );
-
     return JWT::encode($payload,$key,'HS256');
 }
 

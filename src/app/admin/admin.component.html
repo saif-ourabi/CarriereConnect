@@ -8,7 +8,6 @@
 <body>
   <div class="container mt-3">
     <div class="row">
-      <!-- Iterate over offers and create card for each offer -->
       <div class="col-md-4 mb-3" *ngFor="let f of offres | paginate: { itemsPerPage: 10, currentPage: p }">
         <div class="card">
           <div class="card-body">
@@ -16,8 +15,8 @@
             <p class="card-text">Experience: {{f.experience}}</p>
             <p class="card-text">Salaire: {{f.salaire}}</p>
             <p class="card-text">Date d'expérience: {{f.date_exp}}</p>
-            <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal"data-bs-target="#myModal">Modifier</a> <!-- Changed "Modifies" to "Modifier" -->
-            <a href="#" class="btn btn-outline-danger" (click)="deleteoffer(f.id_offre)">Supprimer</a> <!-- Changed "Supprimes" to "Supprimer" -->
+            <a  class="btn btn-outline-primary" data-bs-toggle="modal"data-bs-target="#myModal">Modifier</a>
+            <a class="btn btn-outline-danger" (click)="deleteoffer(f.id_offre)">Supprimer</a>
           </div>
         </div>
       </div>

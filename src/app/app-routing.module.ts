@@ -16,7 +16,7 @@ const routes: Routes = [
   {path:'listerOffre', component:ListerOffreComponent},
   {path:'home-page', component:HomePageComponent},
   {path:'Details/:id', component: DetailsComponent},
-  {path:'Register', component: RegisterComponent},
+  {path:'register', component: RegisterComponent},
   {path:'Footer', component: FooterComponent},
   {path:'candidature', component:CandidatureComponent,canActivate:[UserGuard]},
   {path:'login', component: LoginComponent},
