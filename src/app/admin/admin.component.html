@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
+
 <body>
   <div class="container mt-3">
     <div class="row">
@@ -13,15 +15,14 @@
           <div class="card-body">
             <h5 class="card-title">ID: {{f.id_offre}}</h5>
             <p class="card-text">Experience: {{f.experience}}</p>
-            <p class="card-text">Salaire: {{f.salaire}}</p>
+            <p class="card-text">Salaire: {{f.saliare}}</p>
             <p class="card-text">Date d'expérience: {{f.date_exp}}</p>
-            <a  class="btn btn-outline-primary" data-bs-toggle="modal"data-bs-target="#myModal">Modifier</a>
+            <a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#myModal" (click)="enterforme(f.id_offre,f.experience,f.saliare,f.date_exp)">Modifier</a>
             <a class="btn btn-outline-danger" (click)="deleteoffer(f.id_offre)">Supprimer</a>
           </div>
         </div>
       </div>
     </div>
-    <!-- Include pagination-controls -->
     <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </div>
 
@@ -32,16 +33,56 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Formulaire de Candidature</h4> <!-- Removed unnecessary attribute "center_focus_strong" -->
+          <h4 class="modal-title">Formulaire de Candidature</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
         <!-- Modal BODY -->
         <div class="modal-body">
           <div class="card p-4" style="width: 100%;">
-            <form class="needs-validation custf" novalidate [formGroup]="">
+            <form class="needs-validation custf" novalidate [formGroup]="updateform">
               <div class="row">
-                <!-- Add form elements here -->
+                <div class="col-md-6 mb-3">
+                  <label for="id" class="form-label">ID:</label>
+                  <input type="text" id="id" class="form-control" formControlName="id" required  readonly/>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="Experience" class="form-label">Experience:</label>
+                  <input type="number" id="Experience" class="form-control" formControlName="Experience" required />
+                  <div *ngIf="updateform.get('Experience').errors?.['required'] && c" class="text-danger">
+                    Le champ Experience est requis
+                  </div>
+                  <div *ngIf="updateform.get('Experience').errors?.['pattern'] && c" class="text-danger">
+                    Le champ prénom ne doit pas contenir des chiffres ni des caractères spéciaux.
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="Salaire" class="form-label">Salaire:</label>
+                  <input type="number" id="Salaire" class="form-control" formControlName="Salaire"/>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="date_exp" class="form-label">Date d'expérience:</label>
+                  <input type="date" id="date_exp" class="form-control" formControlName="date_exp" required />
+                  <div *ngIf="updateform.get('date_exp').errors?.['date_exp'] && c" class="text-danger">
+                    Email doit être valide.
+                  </div>
+                  <div *ngIf="updateform.get('date_exp').errors?.['required'] && c" class="text-danger">
+                    Date d'expérience
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="description" class="form-label">description:</label><br>
+                <textarea name="description" id="description" cols="30" rows="10" required formControlName="description" class="md-textarea form-control"></textarea>
+                <div *ngIf="updateform.get('description').errors?.['required'] && c" class="text-danger">
+                  Le champ description est requis.
+                </div>
               </div>
             </form>
           </div>
@@ -52,8 +93,11 @@
           <button type="submit" class="btn btn-danger" id="sbt" data-bs-dismiss="modal">Postuler</button>
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
         </div>
+
       </div>
     </div>
   </div>
+
 </body>
+
 </html>
