@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router, private login: LoginService, private toast: NgToastService ) {}
 
   ngOnInit(): void {
+    this.login.checkAuthStatus()
     this.login.authStatus$.subscribe((isLoggedIn: boolean) => {
       this.status = isLoggedIn;
       if(isLoggedIn){

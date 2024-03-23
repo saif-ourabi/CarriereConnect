@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { CookieService } from 'ngx-cookie';
 
 @Injectable({
   providedIn: 'root',
@@ -10,13 +9,12 @@ import { CookieService } from 'ngx-cookie';
 export class LoginService {
   private apiUrl = 'http://localhost:8000/';
 
-  constructor(private http: HttpClient, private CookieModule: CookieService) {}
+  constructor(private http: HttpClient) {}
 
-  private authStatusSubject = new BehaviorSubject<boolean>(
-    this.checkAuthStatus()
-  );
+  private authStatusSubject = new BehaviorSubject<boolean>(false); // Initialize with false
 
   authStatus$ = this.authStatusSubject.asObservable();
+
   login(userData: any): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'login.php', userData).pipe(
       tap((response: any) => {
@@ -33,24 +31,41 @@ export class LoginService {
   }
 
   logout(): void {
-    this.CookieModule.remove('sessionId');
-    this.CookieModule.remove('userId');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('userId');
     this.authStatusSubject.next(false);
   }
 
   getUserInfo(): Observable<any[]> {
-    const userId = this.CookieModule.get('userId');
-    return this.http.post<any[]>(this.apiUrl + 'getUtilisateurinfo.php', {
+    const userId = sessionStorage.getItem('userId');
+    return this.http.post<any[]>(this.apiUrl +'getUtilisateurinfo.php', {
       id: userId,
     });
   }
 
   private setSessionData(response: any): void {
-    this.CookieModule.putObject('sessionId', response.sessionId);
-    this.CookieModule.putObject('userId', response.userId);
+    sessionStorage.setItem('token', response.token);
+    sessionStorage.setItem('userId', response.userId);
   }
 
-   checkAuthStatus(): boolean {
-    return this.CookieModule.getObject('sessionId')!=undefined;
+  checkAuthStatus(): void {
+    const jwt_token = sessionStorage.getItem('token');
+    if (jwt_token) {
+      this.http.post<any>(this.apiUrl + 'auth.php', { jwt_token }).subscribe(
+        (rep: any) => {
+          if (rep.success) {
+            this.authStatusSubject.next(true);
+          } else {
+            this.authStatusSubject.next(false);
+          }
+        },
+        (error) => {
+          console.error('Error checking authentication status:', error);
+          this.authStatusSubject.next(false);
+        }
+      );
+    } else {
+      this.authStatusSubject.next(false);
+    }
   }
 }

@@ -17,7 +17,7 @@ export class candidatureService {
 
 
   getcandidature(): Observable<any[]> {
-    return this.http.post<any[]>(this.Url + "getcandidature.php", { "id": this.CookieModule.get("userId").replace(/^"(.*)"$/, '$1')});
+    return this.http.post<any[]>(this.Url + "getcandidature.php", { "id": sessionStorage.getItem('userId')});
   }
 
 

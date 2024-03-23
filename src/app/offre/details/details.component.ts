@@ -28,7 +28,6 @@ export class DetailsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toast: NgToastService,
     private candidatureService: candidatureService,
-    private CookieModule: CookieService
   ) {
     this.CandidatureForm = this.formBuilder.group({
       nom: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]],
@@ -44,7 +43,7 @@ export class DetailsComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.offreId = params.get('id');
-      this.userid=this.CookieModule.get("userId");
+      this.userid=sessionStorage.getItem('userId');
     });
 
     this.offreserviceService.getOffres().subscribe((data) => {
