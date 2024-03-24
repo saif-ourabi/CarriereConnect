@@ -15,6 +15,12 @@ export class OffreserviceService {
   }
 
   deleteOffre(offerid): Observable<any[]> {
-    return this.http.post<any[]>(this.url + 'deleteOffre.php',{id:offerid});
+    return this.http.post<any[]>(this.url + "deleteOffre.php",{id:offerid});
   }
+
+  updateOffre(data): Observable<any[]> {
+    return this.http.post<any[]>(this.url+"updateoffre.php",data);
+  }
+
+
 }

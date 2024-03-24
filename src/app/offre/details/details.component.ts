@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
@@ -21,6 +21,7 @@ export class DetailsComponent implements OnInit {
   user: any;
   CandidatureForm: FormGroup;
   c = false;
+  @ViewChild('closeButton') closeButton: ElementRef;
   constructor(
     private offreserviceService: OffreserviceService,
     private route: ActivatedRoute,
@@ -59,7 +60,7 @@ export class DetailsComponent implements OnInit {
   enterforme() {
     this.login.getUserInfo().subscribe((rep) => {
       this.user = rep;
-      const userId = this.userid.replace(/^"(.*)"$/, '$1');
+      const userId = this.userid;
       this.CandidatureForm.setValue({
         nom: this.user.nom,
         prenom: this.user.prenom,
@@ -75,7 +76,7 @@ export class DetailsComponent implements OnInit {
   submit() {
     this.c = true;
     if (this.CandidatureForm.valid) {
-      console.log(this.CandidatureForm.value)
+      this.closeButton.nativeElement.click();
       this.candidatureService.psotule(this.CandidatureForm.value).subscribe((rep: any) => {
         if (rep.state==false) {
           if (rep.message =='Database error') {

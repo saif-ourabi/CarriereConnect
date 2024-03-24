@@ -17,8 +17,8 @@
             <p class="card-text">Experience: {{f.experience}}</p>
             <p class="card-text">Salaire: {{f.saliare}}</p>
             <p class="card-text">Date d'expérience: {{f.date_exp}}</p>
-            <a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#myModal" (click)="enterforme(f.id_offre,f.experience,f.saliare,f.date_exp)">Modifier</a>
-            <a class="btn btn-outline-danger" (click)="deleteoffer(f.id_offre)">Supprimer</a>
+            <a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#myModal" (click)="enterForm(f.id_offre,f.experience,f.saliare,f.date_exp,f.description)">Modifier</a>
+            <a class="btn btn-outline-danger" (click)="deleteOffer(f.id_offre)">Supprimer</a>
           </div>
         </div>
       </div>
@@ -27,24 +27,24 @@
   </div>
 
   <!-- Modal -->
-  <div class="modal fade" id="myModal">
+  <div class="modal" id="myModal">
     <div class="modal-dialog">
       <div class="modal-content">
 
         <!-- Modal Header -->
         <div class="modal-header">
           <h4 class="modal-title">Formulaire de Candidature</h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" #closeButton></button>
         </div>
 
         <!-- Modal BODY -->
         <div class="modal-body">
           <div class="card p-4" style="width: 100%;">
-            <form class="needs-validation custf" novalidate [formGroup]="updateform">
+            <form class="needs-validation custf" novalidate [formGroup]="updateform" (submit)="submit()">
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="id" class="form-label">ID:</label>
-                  <input type="text" id="id" class="form-control" formControlName="id" required  readonly/>
+                  <input type="text" id="id" class="form-control" formControlName="id" required readonly/>
                 </div>
 
                 <div class="col-md-6 mb-3">
@@ -53,8 +53,8 @@
                   <div *ngIf="updateform.get('Experience').errors?.['required'] && c" class="text-danger">
                     Le champ Experience est requis
                   </div>
-                  <div *ngIf="updateform.get('Experience').errors?.['pattern'] && c" class="text-danger">
-                    Le champ prénom ne doit pas contenir des chiffres ni des caractères spéciaux.
+                  <div *ngIf="updateform.get('Experience').errors?.['min'] && c" class="text-danger">
+                    Le champ Experience doit etre positive
                   </div>
                 </div>
               </div>
@@ -63,35 +63,36 @@
                 <div class="col-md-6 mb-3">
                   <label for="Salaire" class="form-label">Salaire:</label>
                   <input type="number" id="Salaire" class="form-control" formControlName="Salaire"/>
+                  <div *ngIf="updateform.get('Salaire').errors?.['required'] && c" class="text-danger"> <!-- Corrected validation -->
+                    Le champ Salaire est requise
+                  </div>
+                  <div *ngIf="updateform.get('Salaire').errors?.['min'] && c" class="text-danger"> <!-- Corrected validation -->
+                    Le champ Salaire est doit etre positive
+                  </div>
                 </div>
 
                 <div class="col-md-6 mb-3">
                   <label for="date_exp" class="form-label">Date d'expérience:</label>
                   <input type="date" id="date_exp" class="form-control" formControlName="date_exp" required />
-                  <div *ngIf="updateform.get('date_exp').errors?.['date_exp'] && c" class="text-danger">
-                    Email doit être valide.
-                  </div>
-                  <div *ngIf="updateform.get('date_exp').errors?.['required'] && c" class="text-danger">
-                    Date d'expérience
+                  <div *ngIf="updateform.get('date_exp').errors?.['required'] && c" class="text-danger"> <!-- Corrected validation -->
+                    Date d'expérience est requise
                   </div>
                 </div>
               </div>
 
               <div class="mb-3">
-                <label for="description" class="form-label">description:</label><br>
-                <textarea name="description" id="description" cols="30" rows="10" required formControlName="description" class="md-textarea form-control"></textarea>
+                <label for="description" class="form-label">Description:</label><br>
+                <textarea id="description" class="form-control md-textarea" formControlName="description" rows="5" required></textarea>
                 <div *ngIf="updateform.get('description').errors?.['required'] && c" class="text-danger">
                   Le champ description est requis.
                 </div>
               </div>
+              <div class="modal-footer d-flex justify-content-center">
+                <button type="submit" class="btn btn-success" id="sbt">Update</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+              </div>
             </form>
           </div>
-        </div>
-
-        <!-- Modal Footer -->
-        <div class="modal-footer d-flex justify-content-center">
-          <button type="submit" class="btn btn-danger" id="sbt" data-bs-dismiss="modal">Postuler</button>
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
         </div>
 
       </div>

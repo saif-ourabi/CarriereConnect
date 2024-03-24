@@ -23,15 +23,13 @@ export class HeaderComponent implements OnInit {
           this.userRole=rep.role;
         })
       }
-      else{
-        this.toast.info({detail:"INFO",summary:'Vous êtes deconnecté',duration:5000})
-      }
     });
 
   }
 
   logout(): void {
     this.login.logout()
+    this.toast.info({detail:"INFO",summary:'Vous êtes deconnecté',duration:5000})
     this.router.navigate(["/home-page"])
   }
 }
