@@ -51,9 +51,9 @@ export class AdminComponent implements OnInit {
 
   deleteOffer(id: any): void {
     this.offreserviceService.deleteOffre(id).subscribe((rep: any) => {
-      if (rep.status) {
+      if (rep==1) {
         this.toast.success({ detail: "Offre supprimée avec succès", summary: 'Suppression réussie', duration: 5000 });
-        window.location.reload();
+        this.loadOffres();
       } else {
         this.toast.error({ detail: "Erreur lors de la suppression de l'offre", summary: 'Erreur', duration: 5000 });
       }
