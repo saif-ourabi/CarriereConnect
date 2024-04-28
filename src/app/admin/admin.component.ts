@@ -12,8 +12,11 @@ export class AdminComponent implements OnInit {
   offres: any[];
   p: number = 1;
   c = false;
+  c1 = false;
+  ajoutform: FormGroup;
   updateform: FormGroup;
   @ViewChild('closeButton') closeButton: ElementRef;
+  @ViewChild('closeButtonadd') closeButtonadd: ElementRef;
 
   constructor(
     private offreserviceService: OffreserviceService,
@@ -26,6 +29,13 @@ export class AdminComponent implements OnInit {
       Salaire: ['', [Validators.required, Validators.min(0)]],
       date_exp: ['', Validators.required],
       description: ['', Validators.required],
+    });
+
+    this.ajoutform = this.formBuilder.group({
+      Experience: ['',[Validators.required,Validators.min(0)]],
+      Salaire: ['', [Validators.required, Validators.min(0)]],
+      date_exp: ['', Validators.required],
+      description: ['', Validators.required]
     });
   }
 
@@ -66,6 +76,22 @@ export class AdminComponent implements OnInit {
       this.closeButton.nativeElement.click();
       this.offreserviceService.updateOffre(this.updateform.value).subscribe((rep: any) => {
         if (rep.success) {
+          this.toast.success({ detail: "Offre mise à jour avec succès", summary: 'Mise à jour réussie', duration: 5000 });
+          this.loadOffres();
+        } else {
+          this.toast.error({ detail: "Erreur lors de la mise à jour de l'offre", summary: 'Erreur', duration: 5000 });
+        }
+      });
+    }
+  }
+
+
+  submitAdd(){
+    this.c1= true;
+    if (this.ajoutform.valid) {
+      this.closeButtonadd.nativeElement.click();
+      this.offreserviceService.addOffer(this.ajoutform.value).subscribe((rep: any) => {
+        if (rep) {
           this.toast.success({ detail: "Offre mise à jour avec succès", summary: 'Mise à jour réussie', duration: 5000 });
           this.loadOffres();
         } else {

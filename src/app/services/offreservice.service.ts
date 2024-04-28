@@ -23,4 +23,9 @@ export class OffreserviceService {
   }
 
 
+  addOffer(data):Observable<any[]>{
+    return this.http.post<any[]>(this.url+"add_offer.php",data);
+  }
+
+
 }
