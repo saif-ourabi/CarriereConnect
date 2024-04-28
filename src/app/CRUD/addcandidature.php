@@ -35,7 +35,7 @@ class candidature
         $resof = $resof->fetch(PDO::FETCH_ASSOC);
         $datpost = date("Y-m-d");
         if (strtotime($resof["date_exp"]) >= strtotime($datpost)) {
-            $sql = "INSERT INTO candidature VALUES ('$id_offre','$datpost','$id_user','$nom','$prenom','$cv','$cin','$email');";
+            $sql = "INSERT INTO candidature VALUES (NUll,'$id_offre','$datpost','$id_user','$nom','$prenom','$cv','$cin','$email');";
             try {
                 $res = $this->connex->exec($sql);
                 header("Content-Type: application/json");

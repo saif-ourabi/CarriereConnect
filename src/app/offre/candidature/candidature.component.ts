@@ -21,6 +21,7 @@ export class CandidatureComponent implements OnInit {
 
   ngOnInit(): void {
     this.candidature.getcandidature().subscribe((userData) => {
+      console.log(userData)
       this.offreserviceService.getOffres().subscribe((offerData) => {
         if (Array.isArray(userData)) {
           const filteredOffers = offerData.filter((offer)=>
@@ -29,7 +30,7 @@ export class CandidatureComponent implements OnInit {
 
           this.combinedData = filteredOffers.map((offer) => {
             const matchingUser = userData.find((userOffer) => userOffer.id_offre === offer.id_offre);
-            return { ...offer, user: matchingUser };
+            return { ...offer, user: matchingUser, id_candidature: matchingUser.id_candidature };
           });
         }
       });

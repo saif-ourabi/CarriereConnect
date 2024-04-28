@@ -10,6 +10,7 @@
     <table class="table table-striped">
       <thead>
         <tr>
+          <th>id_candidature</th>
           <th>id_offre</th>
           <th>saliare</th>
           <th>date_exp</th>
@@ -18,6 +19,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let f of combinedData | paginate: { itemsPerPage: 10, currentPage: p }">
+          <td>{{f.id_candidature}}</td>
           <td>{{f.id_offre}}</td>
           <td>{{f.saliare}}</td>
           <td>{{f.date_exp}}</td>
