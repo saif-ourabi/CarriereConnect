@@ -81,7 +81,7 @@
 
               <div class="mb-3">
                 <label for="CV" class="form-label">CV:</label><br>
-                <input type="file" id="cv" class="" required  formControlName="cv" accept=".pdf"  />
+                <input type="file" id="cv" class="" required  formControlName="cv"  accept=".pdf"/>
 
                 <div *ngIf="CandidatureForm.get('cv').errors?.['required'] && c" class="text-danger">
                   Le champ CV est requis.

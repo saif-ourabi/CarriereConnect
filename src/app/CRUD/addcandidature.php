@@ -34,7 +34,11 @@ class candidature
         $resof = $this->connex->query($sql);
         $resof = $resof->fetch(PDO::FETCH_ASSOC);
         $datpost = date("Y-m-d");
-        if (strtotime($resof["date_exp"]) >= strtotime($datpost)) {
+
+        $sqluser = "SELECT * FROM candidature WHERE id_offre=$id_offre and id_user=$id_user";
+        $resofuser = $this->connex->query($sqluser);
+        $resofuser = $resofuser->fetch(PDO::FETCH_ASSOC);
+        if (strtotime($resof["date_exp"]) >= strtotime($datpost) && $resofuser==false) {
             $sql = "INSERT INTO candidature VALUES (NUll,'$id_offre','$datpost','$id_user','$nom','$prenom','$cv','$cin','$email');";
             try {
                 $res = $this->connex->exec($sql);
@@ -46,8 +50,15 @@ class candidature
             }
         }
         else{
+            if(strtotime($resof["date_exp"]) < strtotime($datpost)){
             header("Content-Type: application/json");
             echo json_encode(["state" => false, "message" => "Offer expired"]);
+            }
+            else{
+              header("Content-Type: application/json");
+              echo json_encode(["state" => false, "message" => "tu as deja postules"]);
+            }
+
         }
     }
 }

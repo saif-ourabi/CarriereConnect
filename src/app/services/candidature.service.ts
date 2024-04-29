@@ -17,7 +17,10 @@ export class candidatureService {
 
 
   getcandidature(): Observable<any[]> {
-    return this.http.post<any[]>(this.Url + "getcandidature.php", { "id": sessionStorage.getItem('userId')});
+    const token = sessionStorage.getItem('token');
+    return this.http.post<any[]>(this.Url +'getcandidature.php', {
+      jwt_token: token,
+    });
   }
 
 

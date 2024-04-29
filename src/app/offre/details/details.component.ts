@@ -1,11 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { candidatureService } from 'src/app/services/candidature.service';
 import { LoginService } from 'src/app/services/login.service';
 import { OffreserviceService } from 'src/app/services/offreservice.service';
-import { CookieModule, CookieService } from 'ngx-cookie';
+
 
 @Component({
   selector: 'app-details',
@@ -17,18 +17,17 @@ export class DetailsComponent implements OnInit {
   offres: any[];
   offre: any;
   status: boolean;
-  userid: any;
-  user: any;
   CandidatureForm: FormGroup;
   c = false;
   @ViewChild('closeButton') closeButton: ElementRef;
+
   constructor(
     private offreserviceService: OffreserviceService,
     private route: ActivatedRoute,
     private login: LoginService,
     private formBuilder: FormBuilder,
     private toast: NgToastService,
-    private candidatureService: candidatureService,
+    private candidatureService: candidatureService
   ) {
     this.CandidatureForm = this.formBuilder.group({
       nom: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]],
@@ -37,19 +36,17 @@ export class DetailsComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       cv: ['', [Validators.required]],
       id_offre: [''],
-      id_user:['']
+      id_user: ['']
     });
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.offreId = params.get('id');
-      this.userid=sessionStorage.getItem('userId');
-    });
-
-    this.offreserviceService.getOffres().subscribe((data) => {
-      this.offres = data;
-      this.offre = this.offres.find((obj) => obj.id_offre == this.offreId);
+      this.offreserviceService.getOffres().subscribe((data) => {
+        this.offres = data;
+        this.offre = this.offres.find((obj) => obj.id_offre == this.offreId);
+      });
     });
 
     this.login.authStatus$.subscribe((isLoggedIn: boolean) => {
@@ -58,36 +55,41 @@ export class DetailsComponent implements OnInit {
   }
 
   enterforme() {
-    this.login.getUserInfo().subscribe((rep) => {
-      this.user = rep;
-      const userId = this.userid;
-      this.CandidatureForm.setValue({
-        nom: this.user.nom,
-        prenom: this.user.prenom,
-        cin: this.user.cin,
-        email: this.user.email,
+    this.login.getUserInfo().subscribe((rep: any) => {
+      console.log(rep);
+      this.CandidatureForm.patchValue({
+        nom: rep.nom,
+        prenom: rep.prenom,
+        cin: rep.cin,
+        email: rep.email,
         cv: '',
-        id_offre: this.offreId,
-        id_user: userId
+        id_offre: Number(this.offreId),
+        id_user: rep.id_user
       });
     });
   }
 
   submit() {
     this.c = true;
+    console.log(this.CandidatureForm.value);
     if (this.CandidatureForm.valid) {
       this.closeButton.nativeElement.click();
       this.candidatureService.psotule(this.CandidatureForm.value).subscribe((rep: any) => {
-        if (rep.state==false) {
-          if (rep.message =='Database error') {
-            this.toast.error({detail: 'ERROR',summary: 'Tu as déjà postulé'});
+        console.log(rep)
+        if (rep.state == false) {
+          if (rep.message == 'tu as deja postules') {
+            this.toast.error({ detail: 'ERROR', summary: 'Tu as déjà postulé' });
           } else {
-            this.toast.error({ detail: 'ERROR', summary: "L'offre a expiré"});
+            this.toast.error({ detail: 'ERROR', summary: "L'offre a expiré" });
           }
         } else {
-          this.toast.success({detail: 'SUCCÈS',summary: "L'opération a été effectuée avec succès",duration: 5000});
+          this.toast.success({ detail: 'SUCCÈS', summary: "L'opération a été effectuée avec succès", duration: 5000 });
         }
       });
     }
   }
+
+
+
+
 }

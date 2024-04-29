@@ -38,7 +38,7 @@ class login
             if (!empty($res)&& md5($user_data["password"])==$res[0]["password"]) {
                 $UserID=$res[0]['id_user'];
                 $jwt=generate_jwt_token($UserID,$key);
-                $response = array('status' => true, 'message' => 'correct info','userId' => $UserID, 'token' => $jwt);
+                $response = array('status' => true, 'message' => 'correct info','token' => $jwt);
                 echo json_encode($response);
             } else {
                 header("Access-Control-Allow-Origin: *");

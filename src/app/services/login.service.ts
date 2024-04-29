@@ -32,20 +32,18 @@ export class LoginService {
 
   logout(): void {
     sessionStorage.removeItem('token');
-    sessionStorage.removeItem('userId');
     this.authStatusSubject.next(false);
   }
 
   getUserInfo(): Observable<any[]> {
-    const userId = sessionStorage.getItem('userId');
+    const token = sessionStorage.getItem('token');
     return this.http.post<any[]>(this.apiUrl +'getUtilisateurinfo.php', {
-      id: userId,
+      jwt_token: token,
     });
   }
 
   private setSessionData(response: any): void {
     sessionStorage.setItem('token', response.token);
-    sessionStorage.setItem('userId', response.userId);
   }
 
   checkAuthStatus(): void {
